@@ -10,12 +10,12 @@
     "status": "todo"
   },
   {
-    "id": 0,
+    "id": 2,
     "description": "Cook dinner",
     "status": "todo"
   },
   {
-    "id": 0,
+    "id": 3,
     "description": "Schedule a call with friends",
     "status": "done"
   } 
