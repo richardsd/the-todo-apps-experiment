@@ -1,0 +1,22 @@
+[
+  {
+    "id": 0,
+    "description": "Buy groceries",
+    "status": "todo"
+  },
+  {
+    "id": 1,
+    "description": "Clean up the house",
+    "status": "todo"
+  },
+  {
+    "id": 0,
+    "description": "Cook dinner",
+    "status": "todo"
+  },
+  {
+    "id": 0,
+    "description": "Schedule a call with friends",
+    "status": "done"
+  } 
+]

@@ -1,0 +1,14 @@
+{
+  "name": "the-todo-apps-experiment",
+  "version": "1.0.0",
+  "description": "A set of todo apps to experiment with development frameworks.",
+  "main": "index.js",
+  "scripts": {
+    "server": "node ./server/index.js"
+  },
+  "author": "Ricardo Dias",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
