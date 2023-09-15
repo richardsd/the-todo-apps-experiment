@@ -3,6 +3,8 @@
 
   export let data;
 
+  $: done = data.status === 'done';
+
   const dispatch = createEventDispatcher();
 
   function updateTodo(item) {
@@ -18,6 +20,6 @@
 </style>
 
 <div>
-  <input type="checkbox" checked on:change={updateTodo(data)}>
-  <span class="{data.status === 'done' ? 'done' : ''}">{data.description}</span>
+  <input type="checkbox" bind:checked={done} on:change={updateTodo(data)}>
+  <span class="{done ? 'done' : ''}">{data.description}</span>
 </div>
