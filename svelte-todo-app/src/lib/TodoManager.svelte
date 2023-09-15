@@ -11,8 +11,12 @@
   $: totalNumberOfTodos = todos.length;
 
   onMount(async () => {
-    const response = await fetch('http://localhost:3000/todos');
-    data = await response.json();
+    try {
+      const response = await fetch('http://localhost:3000/todos');
+      data = await response.json();
+    } catch (e) {
+      console.error('Couldn\'t fetch data from server');
+    }
 
     done = data.filter(item => item.status === 'done');
     todos = data.filter(item => item.status === 'todo');
