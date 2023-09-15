@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import Todo from './Todo.svelte';
 
   let data = [];
   let done = [];
@@ -58,12 +59,6 @@
   }
 </script>
 
-<style>
-  .todo-done {
-    text-decoration: line-through;
-  }
-</style>
-
 <h1>The Todo app experiment - Svelte edition</h1>
 
 <div>
@@ -79,17 +74,11 @@
 {/if}
 
 {#each todos as todo, idx}
-<div>
-  <input type="checkbox" on:change={updateTodo(todo, idx)}>
-  <span>{todo.description}</span>
-</div>
+  <Todo data={todo} on:todoUpdated={updateTodo(todo, idx)} />
 {/each}
 
 <h3>Done</h3>
 <h5>{totalNumberOfItemsDone} task(s) completed</h5>
 {#each done as todo, idx}
-<div>
-  <input type="checkbox" checked on:change={updateTodo(todo, idx)}>
-  <span class="todo-done">{todo.description}</span>
-</div>
+  <Todo data={todo} on:todoUpdated={updateTodo(todo, idx)} />
 {/each}
