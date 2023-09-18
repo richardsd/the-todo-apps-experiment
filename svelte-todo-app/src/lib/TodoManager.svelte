@@ -61,6 +61,16 @@
       todos = [item, ...todos];
     }
   }
+
+  function deleteTodo(item, index) {
+    if (item.status === 'todo') {
+      todos.splice(index, 1);
+      todos = todos;
+    } else {
+      done.splice(index, 1);
+      done = done;
+    }
+  }
 </script>
 
 <h1>The Todo app experiment - Svelte edition</h1>
@@ -78,11 +88,11 @@
 {/if}
 
 {#each todos as todo, idx}
-  <Todo data={todo} on:todoUpdated={updateTodo(todo, idx)} />
+  <Todo data={todo} on:todoUpdated={updateTodo(todo, idx)} on:deleteTodo={deleteTodo(todo, idx)}/>
 {/each}
 
 <h3>Done</h3>
 <h5>{totalNumberOfItemsDone} task(s) completed</h5>
 {#each done as todo, idx}
-  <Todo data={todo} on:todoUpdated={updateTodo(todo, idx)} />
+  <Todo data={todo} on:todoUpdated={updateTodo(todo, idx)} on:deleteTodo={deleteTodo(todo, idx)}/>
 {/each}
