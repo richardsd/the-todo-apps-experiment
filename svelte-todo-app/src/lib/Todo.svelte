@@ -1,8 +1,14 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import MdDelete from 'svelte-icons/md/MdDelete.svelte'
+  import MdSave from 'svelte-icons/md/MdSave.svelte'
+  import MdCancel from 'svelte-icons/md/MdCancel.svelte'
+  import MdEdit from 'svelte-icons/md/MdEdit.svelte'
 
   export let data;
+
+  let mode = 'read';
+  let newDescription = '';
 
   $: done = data.status === 'done';
 
@@ -12,8 +18,19 @@
     dispatch('todoUpdated', item);
   }
 
+  function editTodo(item) {
+    mode = 'edit';
+    newDescription = item.description;
+  }
+
   function deleteTodo(item) {
     dispatch('deleteTodo', item);
+  }
+
+  function saveTodo(item) {
+    mode = 'read';
+    item.description = newDescription;
+    // TODO actual the item
   }
 
 </script>
@@ -29,29 +46,49 @@
     width: 400px;
   }
   .todo-description {
-    min-width: 350px;
+    flex: 1;
   }
   .done {
     text-decoration: line-through;
   }
-  .delete-icon {
+  .text-input {
+    flex: 1;
+  }
+  .action-icon {
     display: none;
+    width: 30px;
+    height: 30px;
   }
   .todo-container:hover {
     background-color: lightgray;
   }
-  .todo-container:hover .delete-icon {
+  .todo-container:hover .action-icon {
     display: block;
-    color: red;
-    width: 30px;
-    height: 30px;
   }
 </style>
 
 <div class="todo-container">
   <input type="checkbox" bind:checked={done} on:change={updateTodo(data)}>
-  <span class="todo-description {done ? 'done' : ''}">{data.description}</span>
-  <button class="delete-icon" on:click={deleteTodo(data)}>
-    <MdDelete />
-  </button>
+  {#if mode === 'read' && data.status !== 'done'}
+    <span class="todo-description {done ? 'done' : ''}">{data.description}</span>
+    <button class="action-icon" on:click={editTodo(data)}>
+      <MdEdit />
+    </button>
+    <button class="action-icon" on:click={deleteTodo(data)}>
+      <MdDelete />
+    </button>
+  {:else if mode === 'edit' && data.status !== 'done'}
+    <input type="text" class="text-input" bind:value={newDescription}/>
+    <button class="action-icon" on:click={saveTodo(data)}>
+      <MdSave />
+    </button>
+    <button class="action-icon" on:click={()=> mode = 'read'}>
+      <MdCancel />
+    </button>
+  {:else}
+    <span class="todo-description {done ? 'done' : ''}">{data.description}</span>
+    <button class="action-icon" on:click={deleteTodo(data)}>
+      <MdDelete />
+    </button>
+  {/if}
 </div>
