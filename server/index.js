@@ -1,3 +1,4 @@
+const uuid = require('uuid');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser')
@@ -19,27 +20,39 @@ app.get('/todos', (req, res) => {
 });
 
 app.put('/todos/new', (req, res) => {
-  const todo = req.body['todo'];
-  if (todo) {
+  const description = req.body['description'];
+  if (description) {
+    const todo = {
+      id: uuid.v1(),
+      description,
+      done: false,
+    };
     todos.push(todo);
-    res.send('Todo successfully created.');
+    res.send(todo);
   }
 });
 
 app.post('/todos/:id', (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   if (id) {
-    const todoIdx = todos.findIndex((todo) => todo.id === id);;
-    if (todoIdx) {
-      const newTodo = req.body['update'];
+    const todoIdx = todos.findIndex((todo) => todo.id === id);
+    if (todoIdx >= 0) {
+      const description = req.body['description'];
+      let done = req.body['done'];
+      done = done && done === 'true' ? true : false;
+      const newTodo = {
+        ...todos[todoIdx],
+        description: description || todos[todoIdx].description,
+        done: done,
+      };
       todos.splice(todoIdx, 1, newTodo);
-      res.send('Todo successfully updated.');
+      res.send(newTodo);
     }
   }
 });
 
-app.delete('/todos/delete/:id', (req, res) => {
-  const id = parseInt(req.params.id);
+app.delete('/todos/:id', (req, res) => {
+  const id = req.params.id;
   if (id) {
     todos = todos.filter((todo) => todo.id !== id);
     res.send('Todo successfully deleted.');

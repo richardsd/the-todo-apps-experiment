@@ -1,22 +1,22 @@
 [
   {
-    "id": 0,
+    "id": "ff728200-59f8-11ee-b269-33be84f524cb",
     "description": "Buy groceries",
-    "status": "todo"
+    "done": false
   },
   {
-    "id": 1,
+    "id": "1111ebe0-59f9-11ee-b269-33be84f524cb",
     "description": "Clean up the house",
-    "status": "todo"
+    "done": false
   },
   {
-    "id": 2,
+    "id": "125b34c0-59f9-11ee-b269-33be84f524cb",
     "description": "Cook dinner",
-    "status": "todo"
+    "done": false
   },
   {
-    "id": 3,
+    "id": "2b36bb40-59f9-11ee-b4b0-81708e6c2133",
     "description": "Schedule a call with friends",
-    "status": "done"
+    "done": true
   } 
 ]

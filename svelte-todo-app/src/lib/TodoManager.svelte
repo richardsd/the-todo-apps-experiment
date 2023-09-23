@@ -1,46 +1,15 @@
 <script>
-  import { onMount } from "svelte";
   import Todo from './Todo.svelte';
 
-  let data = [];
-  let done = [];
-  let todos = [];
+  export let data;
+
   let newTodo = '';
 
+  $: done = data.done;
+  $: todos = data.todos;
   $: totalNumberOfItemsDone = done.length;
   $: totalNumberOfTodos = todos.length;
 
-  onMount(async () => {
-    try {
-      const response = await fetch('http://localhost:3000/todos');
-      data = await response.json();
-    } catch (e) {
-      console.error('Couldn\'t fetch data from server');
-    }
-
-    done = data.filter(item => item.status === 'done');
-    todos = data.filter(item => item.status === 'todo');
-  });
-
-  function onKeyDown(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      addTodo();
-    }
-  }
-
-  function addTodo() {
-    todos = [createTodo(newTodo), ...todos];
-    newTodo = '';
-  }
-
-  function createTodo(description) {
-    return {
-      id: data.length + 1,
-      description,
-      status: 'todo'
-    };
-  }
 
   function updateTodo(item, index) {
     if (!item) {
@@ -73,11 +42,21 @@
   }
 </script>
 
+<style>
+  input {
+    width: 350px;
+  }
+</style>
+
 <h1>The Todo app experiment - Svelte edition</h1>
 
 <div>
-  <input type="text" bind:value="{newTodo}" on:keyup={onKeyDown}/>
-  <button on:click={addTodo} disabled="{newTodo === ''}">Add</button>
+  <form method="post" action="?/create">
+    <label>
+      <input type="text" name="description" bind:value="{newTodo}"/>
+    </label>
+    <button disabled="{newTodo === ''}">Add</button>
+  </form>
 </div>
 
 <h3>To do</h3>
